@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.10)
+
+# Name and Language
+project(TCP_SERVER_MULTIPLEX_THREADS CXX)
+
+# C++11 and standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Compiler warnings
+add_compile_options(-Wall lWextra -pedantic -pthread)
+
+# Executables from source files
+add_executeable(server robust_server.cpp)
+add_executeable(client client.cpp)
