@@ -13,6 +13,11 @@ using namespace std;
 
 int main()
 {
+    //get message from user
+    string userInput;
+    cout << "Enter message sent to server: ";
+    getline(cin, userInput);
+
     //create client socket
     int client_fd = socket (AF_INET, SOCK_STREAM, 0);
     if(client_fd < 0)
@@ -48,7 +53,6 @@ int main()
     bool connection = true;
     while(connection) 
     {
-        string userInput = "Data";
 
         //send first message to server
         int status = send(client_fd,userInput.c_str(), userInput.size(), 0);
@@ -73,6 +77,8 @@ int main()
                 cout << message << endl; //print server response
             }
         }
+
+        sleep(2);
 
     }
     close(client_fd);

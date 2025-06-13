@@ -1,8 +1,8 @@
 #include <iostream>
-#include <cstring> //sending over correct data
-#include <vector> //poll
-#include <chrono> //keeping track of last act by client 
-#include <queue> //creating thread safe task queue
+#include <cstring>
+#include <vector>
+#include <chrono>
+#include <queue>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -146,6 +146,10 @@ class ThreadPool
                         {
                             cout << "Failed to send echo to client, in thread pool" << endl;
                         }
+                        else
+                        {
+                            cout << "Sent the message: " << task.data << "\nTo client: " << task.client_fd << endl;
+                        }
                     }
                 }
             });
@@ -277,7 +281,7 @@ int main()
                     int bytes_read = recv(fd, buffer, sizeof(buffer), 0);
                     if(bytes_read <= 0 ) //data was not received
                     {
-                        cout << "Failed to receive from client: " << fd << endl;
+                        cout << "Client: " << fd << " has disconnected."<< endl;
                         
                         //closes client socket and removes it from clients map and fds vector
                         close(fd);
@@ -293,7 +297,6 @@ int main()
                         //updates activity of client
                         client.update_activity();
 
-                        //
                         string data(buffer, bytes_read);
                         task_queue.push({fd, data});
                     }
