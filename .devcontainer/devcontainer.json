@@ -1,0 +1,33 @@
+{
+  "name": "C++ Network Programming",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": ["--cap-add=SYS_PTRACE", "--cap-add=NET_ADMIN", "--cap-add=NET_RAW", "--security-opt", "seccomp=unconfined"],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-azuretools.vscode-docker",
+        "cschlosser.doxdocgen",
+        "eamodio.gitlens",
+        "ms-vscode.hexeditor",
+        "xaver.clang-format"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+        "C_Cpp.formatting": "clangFormat",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "forwardPorts": [8080, 8081, 9090, 9091],
+  "postCreateCommand": "git config --global core.editor 'code --wait' && echo 'Dev container ready for network programming!' && mkdir -p /workspaces/captures",
+  "mounts": [
+    "source=${localWorkspaceFolder}/captures,target=/workspaces/captures,type=bind,consistency=cached"
+  ]
+}
